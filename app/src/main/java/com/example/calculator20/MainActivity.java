@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.EditText;
+import org.mariuszgromada.math.mxparser.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -81,7 +82,12 @@ public class MainActivity extends AppCompatActivity {
         updateText(".");
     }
     public void equalsBtn(View view){
+        String userExpression = display.getText().toString();
 
+        Expression exp = new Expression(userExpression);
+        String result = String.valueOf(exp.calculate());
+        display.setText(result);
+        display.setSelection(result.length());
     }
     public void addBtn(View view){
         updateText("+");
@@ -133,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (cursorPos != 0 && textLen != 0){
             SpannableStringBuilder selection = (SpannableStringBuilder) display.getText();
-            //replace character eore cursor
+            //replace character before cursor
             selection.replace(cursorPos - 1, cursorPos, "");
             display.setText(selection);
             display.setSelection(cursorPos -1);
